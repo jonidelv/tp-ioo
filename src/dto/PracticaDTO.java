@@ -1,10 +1,5 @@
 package dto;
 
-import java.util.List;
-
-import model.Criterio;
-import model.Practica;
-
 public class PracticaDTO {
 	public String codigo;
     public String nombre;
