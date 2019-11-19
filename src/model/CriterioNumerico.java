@@ -2,26 +2,18 @@ package model;
 
 public class CriterioNumerico implements ICriterio {
 	
-    public int criticoInf;
-    public int criticoSup;
-    public int reservadoInf;
-    public int reservadoSup;
+    public int min;
+    public int max;
     
-    public CriterioNumerico() {
-    	
+    public CriterioNumerico(int min, int max) {
+    	this.min = min;
+    	this.max = max;
     }
-
-    public void addCriterio() {
-        // TODO implement here
-    }
-
-    public void removeCriterio() {
-        // TODO implement here
-    }
-
 
     @Override
     public boolean verificar(String resultado) {
-        return false;
+        int numRes = Integer.parseInt(resultado);
+
+        return min >= numRes && numRes <= max;
     }
 }

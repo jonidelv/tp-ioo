@@ -1,12 +1,12 @@
 package model;
-import java.util.*;
 
 public class Practica {
 	
     private String codigo;
     private String nombre;
     private String grupo;
-    //private Criterio criterio;
+    private ICriterio criterioCritico;
+    private ICriterio criterioReservado;
     private int cantidadHorasResultados;
     private boolean enabled;
     
@@ -86,5 +86,19 @@ public class Practica {
         // TODO implement here
     }
 
+	public ICriterio getCriterioCritico() {
+		return criterioCritico;
+	}
 
+	public void setCriterioCritico(ICriterio criterioCritico) {
+		this.criterioCritico = criterioCritico;
+	}
+
+	public ICriterio getCriterioReservado() {
+		return criterioReservado;
+	}
+
+	public void setCriterioReservado(ICriterio criterioReservado) {
+		this.criterioReservado = criterioReservado;
+	}
 }

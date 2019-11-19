@@ -14,7 +14,7 @@ public class Peticion {
 	private String obraSocial;
 	private LocalDateTime fechaCarga;
 	private LocalDateTime fechaEntrega;
-	private List<Practica> practicas;
+	private List<PracticaPedida> practicas;
 	private List<Resultado> resultados;
 	private Sucursal sucursal;
 	private boolean finalizado;
@@ -25,7 +25,7 @@ public class Peticion {
     	this.paciente = PacientesManager.getInstancia().getPaciente(pacienteId);
     	this.obraSocial = os;
     	this.fechaCarga = LocalDateTime.now();
-    	this.practicas = new ArrayList<Practica>();
+    	this.practicas = new ArrayList<PracticaPedida>();
     	this.resultados = new ArrayList<Resultado>();
     	this.sucursal = SucursalesManager.getInstancia().getSucursal(sucursalId);
     	this.finalizado = false;
@@ -56,11 +56,11 @@ public class Peticion {
 		this.fechaEntrega = fechaEntrega;
 	}
 
-	public List<Practica> getPracticas() {
+	public List<PracticaPedida> getPracticas() {
 		return practicas;
 	}
 
-	public void setPracticas(List<Practica> practicas) {
+	public void setPracticas(List<PracticaPedida> practicas) {
 		this.practicas = practicas;
 	}
 
@@ -108,6 +108,13 @@ public class Peticion {
         // TODO implement here
     }
 
+	public boolean esCritica() {
+		return practicas.stream().anyMatch(PracticaPedida::esCritica);
+	}
+
+	public boolean esReservada() {
+		return practicas.stream().anyMatch(PracticaPedida::esReservada);
+	}
 	
 	
 }
