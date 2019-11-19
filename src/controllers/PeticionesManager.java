@@ -22,9 +22,11 @@ public class PeticionesManager {
 	private static PeticionesManager instancia;
 	
 	private PeticionesManager (){
-		//recuperarPeticionesGuardadas();
-		
-		this.peticiones.add()
+		recuperarPeticionesGuardadas();
+		//this.peticiones = new ArrayList<Peticion>();
+		//addPeticion("99789123", "Galeno", "001");
+		//addPeticion("38613370", "swiss medical", "002");
+		//guardarPeticiones();
 		
 	}
 
