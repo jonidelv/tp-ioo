@@ -1,7 +1,8 @@
 package model;
-import java.util.*;
 
-public class CriterioDescriptivo extends Criterio {
+import java.util.List;
+
+public class CriterioDescriptivo implements ICriterio {
 
     public List<String> valoresCriticos;
     public List<String> valoresReservados;
@@ -19,4 +20,8 @@ public class CriterioDescriptivo extends Criterio {
     }
 
 
+    @Override
+    public boolean verificar(String resultado) {
+        return false;
+    }
 }

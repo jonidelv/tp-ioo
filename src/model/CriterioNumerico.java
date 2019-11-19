@@ -1,6 +1,6 @@
 package model;
 
-public class CriterioNumerico extends Criterio {
+public class CriterioNumerico implements ICriterio {
 	
     public int criticoInf;
     public int criticoSup;
@@ -19,5 +19,9 @@ public class CriterioNumerico extends Criterio {
         // TODO implement here
     }
 
-	
+
+    @Override
+    public boolean verificar(String resultado) {
+        return false;
+    }
 }
