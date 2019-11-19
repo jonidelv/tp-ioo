@@ -12,17 +12,18 @@ public class Sucursal {
 	public Usuario responsableTecnico;
 	public List<Peticion> peticiones;
 	
-	public Sucursal(int num, String direccion){
+	public Sucursal(int num, String direccion, Usuario rt){
 		this.num = num;
 		this.direccion = direccion;
-		this.responsableTecnico = LoginManager.getInstancia().getUsuario();
+		this.responsableTecnico = rt;
 		this.peticiones = new ArrayList<Peticion>();
 		
 	}
 	
-	public void editSucursal (int num, String dir) {
+	public void editSucursal (int num, String dir, Usuario rt) {
 		this.num = num;
 		this.direccion = dir;
+		this.responsableTecnico = rt;
 	}
 
 	public int getNum() {

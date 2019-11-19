@@ -6,7 +6,7 @@ public class Practica {
     private String codigo;
     private String nombre;
     private String grupo;
-    private Criterio criterio;
+    //private Criterio criterio;
     private int cantidadHorasResultados;
     private boolean enabled;
     
@@ -14,7 +14,7 @@ public class Practica {
 	    this.codigo = codigo;
 	    this.nombre = nombre;
 	    this.grupo = "";
-	    this.criterio = null;
+	    //this.criterio = null;
 	    this.cantidadHorasResultados = hs;
 	    this.enabled = true;
     }
@@ -53,13 +53,13 @@ public class Practica {
 		this.grupo = grupo;
 	}
 
-	public Criterio getCriterio() {
-		return criterio;
-	}
-
-	public void setCriterio(Criterio criterio) {
-		this.criterio = criterio;
-	}
+//	public Criterio getCriterio() {
+//		return criterio;
+//	}
+//
+//	public void setCriterio(Criterio criterio) {
+//		this.criterio = criterio;
+//	}
 
 	public int getCantidadHorasResultados() {
 		return cantidadHorasResultados;

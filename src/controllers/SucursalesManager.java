@@ -1,10 +1,19 @@
 package controllers;
 
-import model.Sucursal;
-import java.util.*;
-import javax.swing.JTextField;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import dto.SucursalDTO;
+import model.Sucursal;
+import model.Usuario;
 
 public class SucursalesManager {
 	
@@ -14,10 +23,14 @@ public class SucursalesManager {
 	
 	private SucursalesManager (){
 		
-		this.sucursales = new ArrayList<Sucursal>();
+//		this.sucursales = new ArrayList<Sucursal>();
 		//agregar sucursales prueba
-		this.sucursales.add(new Sucursal(001,"Calle falsa 1234"));
-		this.sucursales.add(new Sucursal(002,"Aca a la vuelta"));
+		recuperarSucursalesGuardadas();
+//		Usuario rt1 = UsuariosManager.getInstancia().getUsuario("usuario01");
+//		Usuario rt2 = UsuariosManager.getInstancia().getUsuario("usuario02");
+//		this.sucursales.add(new Sucursal(001,"Calle falsa 1234",rt1));
+//		this.sucursales.add(new Sucursal(002,"Aca a la vuelta",rt2));
+//		guardarSucursales();
 	}
 
 	public static SucursalesManager getInstancia(){
@@ -27,24 +40,38 @@ public class SucursalesManager {
     	return instancia;
     }
     
+	private void recuperarSucursalesGuardadas() {
+		Gson gson = new Gson();
+		java.lang.reflect.Type listType = new TypeToken<ArrayList<Sucursal>>(){}.getType();
+		try (FileReader reader = new FileReader("sucursales.json")) {
+			this.sucursales = new Gson().fromJson(reader , listType);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void guardarSucursales(){
+		try (Writer writer = new FileWriter("sucursales.json")) {
+		    Gson gson = new GsonBuilder().create();
+		    gson.toJson(this.sucursales, writer);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+	}
 
-    public void removeSucursal() {
-        // TODO implement here
-    }
-
-	public void cargarDatos(int num, String direccion) {
+	public void cargarDatos(int num, String direccion, Usuario rt) {
 		boolean existing = false;
 		for(Sucursal suc : sucursales) {
 			if (suc.getNum() == num) {
-				suc.editSucursal(num, direccion);
+				suc.editSucursal(num, direccion, rt);
 				existing = true;
 			}
 		}
 		
 		if (!existing){
-			sucursales.add(new Sucursal(num,direccion));	
+			sucursales.add(new Sucursal(num,direccion,rt));	
 		}
-	
 
 	}
 
