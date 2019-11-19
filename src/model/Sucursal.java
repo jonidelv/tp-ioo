@@ -20,9 +20,10 @@ public class Sucursal {
 		
 	}
 	
-	public void editSucursal (int num, String dir) {
+	public void editSucursal (int num, String dir, Usuario rt) {
 		this.num = num;
 		this.direccion = dir;
+		this.responsableTecnico = rt;
 	}
 
 	public int getNum() {

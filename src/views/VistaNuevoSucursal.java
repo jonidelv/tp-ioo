@@ -4,29 +4,34 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controllers.SucursalesManager;
+import controllers.UsuariosManager;
+import dto.SucursalDTO;
 import model.Sucursal;
+import model.Usuario;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Font;
+import javax.swing.JComboBox;
 
 public class VistaNuevoSucursal extends JFrame {
 
 	private JPanel contentPane;
 	private static Sucursal sucursal;
 	private JTextField textField_num;
-	private JTextField textField_nombre;
 	private JTextField textField_direccion;
-	private JTextField textField_sexo;
-	private JTextField textField_edad;
+	private JComboBox comboBox_responsableTecnico;
 	
 
 	/**
@@ -78,8 +83,15 @@ public class VistaNuevoSucursal extends JFrame {
 		contentPane.add(lblNum);
 
 		JLabel lblDireccion = new JLabel("Direccion");
-		lblDireccion.setBounds(52, 128, 56, 16);
+		lblDireccion.setBounds(68, 128, 56, 16);
 		contentPane.add(lblDireccion);
+		
+		List<Usuario> usuarios = UsuariosManager.getInstancia().getUsuarios();
+
+		this.comboBox_responsableTecnico = new JComboBox();
+		comboBox_responsableTecnico.setModel(new DefaultComboBoxModel(usuarios.toArray()));
+		comboBox_responsableTecnico.setBounds(136, 160, 116, 22);
+		contentPane.add(comboBox_responsableTecnico);
 		
 		JButton btn_cancelar = new JButton("Cancelar");
 		btn_cancelar.addActionListener(new ActionListener() {
@@ -98,7 +110,7 @@ public class VistaNuevoSucursal extends JFrame {
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				SucursalesManager.getInstancia().cargarDatos(Integer.parseInt(textField_num.getText()),textField_direccion.getText()); //mapear campos manualmente
+				SucursalesManager.getInstancia().cargarDatos(Integer.parseInt(textField_num.getText()),textField_direccion.getText(),(Usuario)comboBox_responsableTecnico.getSelectedItem()); //mapear campos manualmente
 				MenuSucursales back = new MenuSucursales();
 				back.setVisible(true);
 				setVisible(false);
@@ -109,6 +121,10 @@ public class VistaNuevoSucursal extends JFrame {
 		btnGuardar.setBounds(432, 488, 97, 25);
 		contentPane.add(btnGuardar);
 		
+		JLabel lblNewLabel = new JLabel("Responsable tecnico");
+		lblNewLabel.setBounds(12, 167, 112, 16);
+		contentPane.add(lblNewLabel);
+		
 	}
 
 	public void editarSucursal(String num) {
@@ -116,6 +132,7 @@ public class VistaNuevoSucursal extends JFrame {
 		sucursal = SucursalesManager.getInstancia().getSucursal(num);
 		textField_num.setText(String.valueOf(sucursal.getNum()));
 		textField_direccion.setText(sucursal.getDireccion());
+		this.comboBox_responsableTecnico.setSelectedItem(sucursal.responsableTecnico);
 
 		
 		//),textField_nombre.getText(),textField_direccion.getText(),textField_sexo.getText(),Integer.parseInt(textField_edad.getText()));
