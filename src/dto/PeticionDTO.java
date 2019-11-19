@@ -1,14 +1,8 @@
 package dto;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
-import controllers.PeticionesManager;
 import model.Paciente;
-import model.Practica;
-import model.Resultado;
-import model.Usuario;
 
 public class PeticionDTO {
 	

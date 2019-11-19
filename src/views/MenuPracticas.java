@@ -17,8 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import controllers.PracticasManager;
 import dto.PracticaDTO;
 
@@ -78,15 +76,13 @@ public class MenuPracticas extends JFrame {
 				});
 		
 		List<PracticaDTO> practicas = PracticasManager.getInstancia().getPracticasSimples();
-		if(ArrayUtils.isNotEmpty(practicas.toArray())){
-			for (PracticaDTO p:practicas){
+		for (PracticaDTO p:practicas){
 				List<String> list = new ArrayList<String>();
 				list.add(String.valueOf(p.codigo));
 				list.add(p.nombre);
 				list.add(String.valueOf(p.cantidadHorasResultados));
 				list.add(String.valueOf(p.enabled));
 				model.addRow(list.toArray());
-			}
 			
 		}
 		

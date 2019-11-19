@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.security.AccessController;
-
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,8 +16,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
-import org.apache.commons.lang3.ArrayUtils;
 
 import controllers.PacientesManager;
 import dto.PacienteDTO;
@@ -80,14 +76,11 @@ public class MenuPacientes extends JFrame {
 				});
 		
 		List<PacienteDTO> pacientes = PacientesManager.getInstancia().getPacientesSimples();
-		if(ArrayUtils.isNotEmpty(pacientes.toArray())){
-			for (PacienteDTO p:pacientes){
+		for (PacienteDTO p:pacientes){
 				List<String> list = new ArrayList<String>();
 				list.add(String.valueOf(p.dni));
 				list.add(p.nombre);
 				model.addRow(list.toArray());
-			}
-			
 		}
 		
 

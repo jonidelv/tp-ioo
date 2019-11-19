@@ -17,8 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import controllers.PeticionesManager;
 import dto.PeticionDTO;
 
@@ -81,8 +79,7 @@ public class MenuPeticiones extends JFrame {
 		
 		
 		List<PeticionDTO> peticiones = PeticionesManager.getInstancia().getPeticionesSimples();
-		if(ArrayUtils.isNotEmpty(peticiones.toArray())){
-			for (PeticionDTO pet:peticiones){
+		for (PeticionDTO pet:peticiones){
 				List<String> list = new ArrayList<String>();
 				list.add(String.valueOf(pet.id));
 				list.add(pet.paciente.getNombre());
@@ -90,7 +87,6 @@ public class MenuPeticiones extends JFrame {
 				list.add(pet.fechaCarga.toString());
 				list.add(String.valueOf(pet.finalizado));
 				model.addRow(list.toArray());
-			}				
 		}
 		table.setModel(model);	
 		contentPane.add(table);
@@ -144,16 +140,28 @@ public class MenuPeticiones extends JFrame {
 				if(table.getSelectionModel().isSelectionEmpty()){
 					JOptionPane.showMessageDialog(new JFrame(), "Seleccion un paciente de la lista para editar", "Peticiones",JOptionPane.ERROR_MESSAGE);				
 				} else {				
-					//VistaNuevoPeticion nuevaVista = new VistaNuevoPeticion();
-					//nuevaVista.editarPeticion(table.getValueAt(table.getSelectedRow(), 0).toString());
-					//nuevaVista.setVisible(true);
-					//setVisible(false);
+					VistaNuevoPeticion nuevaVista = new VistaNuevoPeticion();
+					nuevaVista.editarPeticion(table.getValueAt(table.getSelectedRow(), 0).toString());
+					nuevaVista.setVisible(true);
+					setVisible(false);
 				}
 				
 			}
 		});
 		btnEditar.setBounds(410, 77, 97, 25);
 		contentPane.add(btnEditar);
+		
+		JButton btn_resultados = new JButton("Resultados");
+		btn_resultados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Resultados resultados = new Resultados();
+				resultados.cargarResultados(table.getValueAt(table.getSelectedRow(), 0).toString());
+				resultados.setVisible(true);
+				setVisible(false);				
+			}
+		});
+		btn_resultados.setBounds(519, 39, 97, 25);
+		contentPane.add(btn_resultados);
 		
 		
 		
@@ -167,8 +175,7 @@ public class MenuPeticiones extends JFrame {
 		});
 
 		List<PeticionDTO> peticiones = PeticionesManager.getInstancia().getPeticionesSimples();
-		if(ArrayUtils.isNotEmpty(peticiones.toArray())){
-			for (PeticionDTO pet:peticiones){
+		for (PeticionDTO pet:peticiones){
 				if (pet.paciente.getDni() == Integer.parseInt(dni)) {
 					List<String> list = new ArrayList<String>();
 					list.add(String.valueOf(pet.id));
@@ -176,11 +183,9 @@ public class MenuPeticiones extends JFrame {
 					list.add(pet.obraSocial);
 					list.add(pet.fechaCarga.toString());
 					model.addRow(list.toArray());
-				}
 			}
 		}
 		table.setModel(model);
 		model.fireTableChanged(null);
 	}
-
 }

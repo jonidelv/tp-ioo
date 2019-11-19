@@ -17,8 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import controllers.SucursalesManager;
 import dto.SucursalDTO;
 
@@ -78,15 +76,12 @@ public class MenuSucursales extends JFrame {
 				});
 		
 		List<SucursalDTO> sucursales = SucursalesManager.getInstancia().getSucursalesSimples();
-		if(ArrayUtils.isNotEmpty(sucursales.toArray())){
-			for (SucursalDTO s:sucursales){
+		for (SucursalDTO s:sucursales){
 				List<String> list = new ArrayList<String>();
 				list.add(String.valueOf(s.num));
 				list.add(s.direccion);
 				//list.add(s.responsableTecnico.userName.toString());
-				model.addRow(list.toArray());
-			}
-			
+				model.addRow(list.toArray());	
 		}
 		
 
@@ -126,10 +121,9 @@ public class MenuSucursales extends JFrame {
 				
 				
 				if(table.getSelectionModel().isSelectionEmpty()){
-				    JOptionPane.showMessageDialog(new JFrame(), "Seleccion un paciente de la lista para borrar", "Sucursales", JOptionPane.ERROR_MESSAGE);	
+				    JOptionPane.showMessageDialog(new JFrame(), "Seleccion una sucursal de la lista para borrar", "Sucursales", JOptionPane.ERROR_MESSAGE);	
 				} else {
-					//TODO completar codigo borrar paciente
-					
+					SucursalesManager.getInstancia().eliminarSucursal(table.getValueAt(table.getSelectedRow(), 0).toString());
 				}
 				
 				
@@ -143,7 +137,7 @@ public class MenuSucursales extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(table.getSelectionModel().isSelectionEmpty()){
-					JOptionPane.showMessageDialog(new JFrame(), "Seleccion un paciente de la lista para editar", "Sucursales",JOptionPane.ERROR_MESSAGE);				
+					JOptionPane.showMessageDialog(new JFrame(), "Seleccion una sucursal de la lista para editar", "Sucursales",JOptionPane.ERROR_MESSAGE);				
 				} else {				
 					VistaNuevoSucursal nuevaVista = new VistaNuevoSucursal();
 					nuevaVista.editarSucursal(table.getValueAt(table.getSelectedRow(), 0).toString());

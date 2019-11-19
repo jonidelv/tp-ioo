@@ -10,19 +10,21 @@ public class Practica {
     private int cantidadHorasResultados;
     private boolean enabled;
     
-	public Practica(String codigo, String nombre, int hs) {
+	public Practica(String codigo, String nombre, int hs, ICriterio critico, ICriterio reservado) {
 	    this.codigo = codigo;
 	    this.nombre = nombre;
 	    this.grupo = "";
-	    //this.criterio = null;
+	    this.criterioCritico = critico;
+	    this.criterioReservado = reservado;
 	    this.cantidadHorasResultados = hs;
 	    this.enabled = true;
     }
 	
-	public void editPractica(String codigo, String nombre, int hs) {
+	public void editPractica(String codigo, String nombre, int hs, ICriterio critico, ICriterio reservado) {
 	    this.codigo = codigo;
 	    this.nombre = nombre;
-	    //this.grupo = "";
+	    this.criterioCritico = critico;
+	    this.criterioReservado = reservado;
 	    this.cantidadHorasResultados = hs;
 	    //this.enabled = true;
     }
@@ -100,5 +102,9 @@ public class Practica {
 
 	public void setCriterioReservado(ICriterio criterioReservado) {
 		this.criterioReservado = criterioReservado;
+	}
+	
+	public String toString(){
+		return this.nombre.toString();
 	}
 }

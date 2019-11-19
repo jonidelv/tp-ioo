@@ -1,10 +1,9 @@
 package model;
 import java.time.LocalDateTime;
-import java.math.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import controllers.PacientesManager;
-import controllers.PeticionesManager;
 import controllers.SucursalesManager;
 
 public class Peticion {
@@ -14,19 +13,23 @@ public class Peticion {
 	private String obraSocial;
 	private LocalDateTime fechaCarga;
 	private LocalDateTime fechaEntrega;
-	private List<PracticaPedida> practicas;
-	private List<Resultado> resultados;
+	private List<PracticaPedida> practicasPedidas;
 	private Sucursal sucursal;
 	private boolean finalizado;
 	
-    
-    public Peticion(String pacienteId, String os, String sucursalId) {
+
+
+	public Peticion(String pacienteId, String os, String sucursalId, List<PracticaPedida> practicasPedidas) {
     	this.id = (int) Math.random(); //PeticionesManager.getInstancia().generateId();
     	this.paciente = PacientesManager.getInstancia().getPaciente(pacienteId);
     	this.obraSocial = os;
     	this.fechaCarga = LocalDateTime.now();
-    	this.practicas = new ArrayList<PracticaPedida>();
-    	this.resultados = new ArrayList<Resultado>();
+    	if (!practicasPedidas.isEmpty()){
+    		this.practicasPedidas = practicasPedidas;
+    	} else {
+    		this.practicasPedidas = new ArrayList<PracticaPedida>();
+    	}
+    	
     	this.sucursal = SucursalesManager.getInstancia().getSucursal(sucursalId);
     	this.finalizado = false;
     	
@@ -40,6 +43,15 @@ public class Peticion {
 		this.paciente = paciente;
 	}
 
+    
+    public Sucursal getSucursal() {
+		return sucursal;
+	}
+
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
+	}
+	
 	public String getObraSocial() {
 		return obraSocial;
 	}
@@ -56,20 +68,12 @@ public class Peticion {
 		this.fechaEntrega = fechaEntrega;
 	}
 
-	public List<PracticaPedida> getPracticas() {
-		return practicas;
+	public List<PracticaPedida> getPracticasPedidas() {
+		return practicasPedidas;
 	}
 
-	public void setPracticas(List<PracticaPedida> practicas) {
-		this.practicas = practicas;
-	}
-
-	public List<Resultado> getResultados() {
-		return resultados;
-	}
-
-	public void setResultados(List<Resultado> resultados) {
-		this.resultados = resultados;
+	public void setPracticasPedidas(List<PracticaPedida> practicas) {
+		this.practicasPedidas = practicas;
 	}
 
 	public boolean isFinalizado() {
@@ -109,11 +113,11 @@ public class Peticion {
     }
 
 	public boolean esCritica() {
-		return practicas.stream().anyMatch(PracticaPedida::esCritica);
+		return practicasPedidas.stream().anyMatch(PracticaPedida::esCritica);
 	}
 
 	public boolean esReservada() {
-		return practicas.stream().anyMatch(PracticaPedida::esReservada);
+		return practicasPedidas.stream().anyMatch(PracticaPedida::esReservada);
 	}
 	
 	

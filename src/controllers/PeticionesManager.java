@@ -3,18 +3,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.*;
-import com.google.gson.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import java.awt.Window.Type;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 
 import dto.PeticionDTO;
-import model.Paciente;
+import dto.SucursalDTO;
 import model.Peticion;
-import model.Sucursal;
+import model.PracticaPedida;
 
 public class PeticionesManager {
 	
@@ -22,11 +21,10 @@ public class PeticionesManager {
 	private static PeticionesManager instancia;
 	
 	private PeticionesManager (){
-		recuperarPeticionesGuardadas();
-		//this.peticiones = new ArrayList<Peticion>();
-		//addPeticion("99789123", "Galeno", "001");
-		//addPeticion("38613370", "swiss medical", "002");
-		//guardarPeticiones();
+		//recuperarPeticionesGuardadas();
+		this.peticiones = new ArrayList<Peticion>();
+		addPeticion("99789123", "Galeno", "001", new ArrayList<PracticaPedida>());
+//		guardarPeticiones();
 		
 	}
 
@@ -92,8 +90,8 @@ public class PeticionesManager {
 		
 	}
 	
-	public void addPeticion(String dni, String os, String idSucursal) {
-        peticiones.add(new Peticion(dni,os,idSucursal));
+	public void addPeticion(String dni, String os, String idSucursal, List<PracticaPedida> practicasPedidas) {
+        peticiones.add(new Peticion(dni,os,idSucursal, practicasPedidas));
         this.guardarPeticiones();
     }
 
@@ -116,6 +114,16 @@ public class PeticionesManager {
     public void listarResultados() {
         // TODO implement here
     }
+
+	public List<PracticaPedida> getPracticasPedidas(Integer cod) {
+		// TODO Auto-generated method stub
+		for (Peticion pet : peticiones){
+			if (pet.getId() == cod){
+				return pet.getPracticasPedidas();
+			}
+		}
+		return (new ArrayList<PracticaPedida>());
+	}
 
 
 	

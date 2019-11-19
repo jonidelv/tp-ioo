@@ -17,8 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import controllers.PacientesManager;
 import controllers.UsuariosManager;
 import model.Usuario;
@@ -79,16 +77,13 @@ public class MenuUsuarios extends JFrame {
 				});
 		
 		List<Usuario> usuarios = UsuariosManager.getInstancia().getUsuarios();
-		if(ArrayUtils.isNotEmpty(usuarios.toArray())){
-			for (Usuario u:usuarios){
+		for (Usuario u:usuarios){
 				List<String> list = new ArrayList<String>();
 				list.add(u.getUserName());
 				list.add(u.getNombre());
 				list.add(u.getEmail());
 				list.add(u.getRole());
 				model.addRow(list.toArray());
-			}
-			
 		}
 		
 

@@ -5,7 +5,12 @@ public class PracticaPedida {
     private Practica practica;
     private String resultado;
 
-    public Practica getPractica() {
+    public PracticaPedida(Practica practica, String resultado) {
+		this.practica = practica;
+		this.resultado = resultado;
+	}
+
+	public Practica getPractica() {
         return practica;
     }
 
@@ -27,5 +32,9 @@ public class PracticaPedida {
 
     public boolean esReservada() {
         return  practica.getCriterioReservado().verificar(resultado);
+    }
+    
+    public String toString(){
+    	return this.practica.getNombre();
     }
 }

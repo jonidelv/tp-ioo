@@ -1,17 +1,17 @@
 package controllers;
-import model.Paciente;
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-
-import java.awt.Window.Type;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.*;
-import javax.swing.JTextField;	
+import java.util.ArrayList;
+import java.util.List;
 
 import dto.PacienteDTO;
+import model.Paciente;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 public class PacientesManager {
 	
@@ -23,25 +23,24 @@ public class PacientesManager {
 	
 	private PacientesManager (){
 		
-		this.recuperarPacientesGuardados();
-		//this.pacientes = new ArrayList<Paciente>();
-		//agregar pacientes prueba
-		//this.pacientes.add(new Paciente(99123456,"Juan Perez","Ejemplo 123","masculino",28));
-		//this.pacientes.add(new Paciente(99789123,"Jose Lopez","Ejemplo 456","masculino",82));
-		//guardarPacientes();
+		this.pacientes = new ArrayList<Paciente>();
+		
+		this.pacientes.add(new Paciente(99123456,"Juan Perez","Ejemplo 123","masculino",28));
+		this.pacientes.add(new Paciente(99789123,"Jose Lopez","Ejemplo 456","masculino",82));
+		guardarPacientes();
 				
 	}
 
-	private void recuperarPacientesGuardados() {
-		java.lang.reflect.Type listType = new TypeToken<ArrayList<Paciente>>(){}.getType();
-		try (FileReader reader = new FileReader("pacientes.json")) {
-			this.pacientes = new Gson().fromJson(reader , listType);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
+//	private void recuperarPacientesGuardados() {
+//		java.lang.reflect.Type listType = new TypeToken<ArrayList<Paciente>>(){}.getType();
+//		try (FileReader reader = new FileReader("pacientes.json")) {
+//			this.pacientes = new Gson().fromJson(reader , listType);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+//	}
+//	
 	private void guardarPacientes(){
 		try (Writer writer = new FileWriter("pacientes.json")) {
 		    Gson gson = new GsonBuilder().create();

@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import dto.SucursalDTO;
+import model.Paciente;
 import model.Sucursal;
 import model.Usuario;
 
@@ -22,15 +23,17 @@ public class SucursalesManager {
 	private static SucursalesManager instancia;
 	
 	private SucursalesManager (){
+
+//		agregar sucursales prueba
 		
-//		this.sucursales = new ArrayList<Sucursal>();
-		//agregar sucursales prueba
-		recuperarSucursalesGuardadas();
-//		Usuario rt1 = UsuariosManager.getInstancia().getUsuario("usuario01");
-//		Usuario rt2 = UsuariosManager.getInstancia().getUsuario("usuario02");
-//		this.sucursales.add(new Sucursal(001,"Calle falsa 1234",rt1));
-//		this.sucursales.add(new Sucursal(002,"Aca a la vuelta",rt2));
-//		guardarSucursales();
+		this.sucursales = new ArrayList<Sucursal>();
+
+		//recuperarSucursalesGuardadas();
+		Usuario rt1 = UsuariosManager.getInstancia().getUsuario("usuario01");
+		Usuario rt2 = UsuariosManager.getInstancia().getUsuario("usuario02");
+		this.sucursales.add(new Sucursal(001,"Calle falsa 1234",rt1));
+		this.sucursales.add(new Sucursal(002,"Aca a la vuelta",rt2));
+		guardarSucursales();
 	}
 
 	public static SucursalesManager getInstancia(){
@@ -96,6 +99,18 @@ public class SucursalesManager {
 					suc.getResponsableTecnico()));			
 		}	
 		return sucursalesDTO;
+	}
+
+	public void eliminarSucursal(String id) {
+		int ind = 0;
+		for (Sucursal suc : this.sucursales){
+			if (String.valueOf(suc.getNum()) == id) {
+					this.sucursales.remove(ind);
+					guardarSucursales();
+			}
+			ind++;
+		}		
+		
 	}
 		
 		
