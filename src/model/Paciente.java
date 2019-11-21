@@ -77,5 +77,9 @@ public class Paciente {
         } else { return true ; }
     }
 
+	public void addPeticion(Peticion peticion) {
+		this.peticiones.add(peticion);		
+	}
+
 	
 }

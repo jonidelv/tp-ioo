@@ -160,15 +160,20 @@ public class MenuPacientes extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(table.getSelectionModel().isSelectionEmpty()){
-					JOptionPane.showMessageDialog(new JFrame(), "Seleccion un paciente de la lista para ver sus peticiones", "Pacientes",JOptionPane.ERROR_MESSAGE);				
-				} else {				
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Seleccion un paciente de la lista para ver sus peticiones",
+							"Pacientes",JOptionPane.ERROR_MESSAGE);				
+				} else {
 					MenuPeticiones nuevaVista = new MenuPeticiones();
+					
 					nuevaVista.main(null);
-					nuevaVista.getPeticionesPaciente(table.getValueAt(table.getSelectedRow(), 0).toString());
+					nuevaVista.getPeticionesPaciente(Integer.parseInt(
+							table.getValueAt(table.getSelectedRow(), 0).toString()) );
 					setVisible(false);
 				}
 			}
 		});
+		
 		btn_peticiones.setBounds(519, 39, 97, 25);
 		contentPane.add(btn_peticiones);
 		

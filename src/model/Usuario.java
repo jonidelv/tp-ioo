@@ -65,15 +65,6 @@ public class Usuario {
     	
     };
     
-    public void editUsuario (String userName, String email, String password, String nombre, String role) {
-    	this.userName = userName;
-    	this.password = password;
-    	this.email = email;
-    	this.nombre = nombre;
-    	this.role = role;
-    	
-    };
-    
     public String toString(){
     	return this.userName;
     }

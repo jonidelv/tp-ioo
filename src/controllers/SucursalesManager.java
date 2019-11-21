@@ -23,17 +23,14 @@ public class SucursalesManager {
 	private static SucursalesManager instancia;
 	
 	private SucursalesManager (){
-
-//		agregar sucursales prueba
+		recuperarSucursalesGuardadas();
 		
-		this.sucursales = new ArrayList<Sucursal>();
-
-		//recuperarSucursalesGuardadas();
-		Usuario rt1 = UsuariosManager.getInstancia().getUsuario("usuario01");
-		Usuario rt2 = UsuariosManager.getInstancia().getUsuario("usuario02");
-		this.sucursales.add(new Sucursal(001,"Calle falsa 1234",rt1));
-		this.sucursales.add(new Sucursal(002,"Aca a la vuelta",rt2));
-		guardarSucursales();
+//		this.sucursales = new ArrayList<Sucursal>();
+//		Usuario rt1 = UsuariosManager.getInstancia().getUsuario("usuario01");
+//		Usuario rt2 = UsuariosManager.getInstancia().getUsuario("usuario02");
+//		this.sucursales.add(new Sucursal(001,"Av 9 de Julio",rt1));
+//		this.sucursales.add(new Sucursal(002,"Lima 555",rt2));
+//		guardarSucursales();
 	}
 
 	public static SucursalesManager getInstancia(){
@@ -75,7 +72,7 @@ public class SucursalesManager {
 		if (!existing){
 			sucursales.add(new Sucursal(num,direccion,rt));	
 		}
-
+		guardarSucursales();
 	}
 
 	public Sucursal getSucursal(String id) {
@@ -101,16 +98,17 @@ public class SucursalesManager {
 		return sucursalesDTO;
 	}
 
-	public void eliminarSucursal(String id) {
+	public void eliminarSucursal(int id) {
 		int ind = 0;
+		int vic = -1;
 		for (Sucursal suc : this.sucursales){
-			if (String.valueOf(suc.getNum()) == id) {
-					this.sucursales.remove(ind);
-					guardarSucursales();
+			if (suc.getNum() == id) {
+				vic = ind;
 			}
 			ind++;
 		}		
-		
+		if(vic != -1) { this.sucursales.remove(vic); }
+		guardarSucursales();
 	}
 		
 		

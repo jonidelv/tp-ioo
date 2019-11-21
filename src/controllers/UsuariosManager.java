@@ -16,19 +16,15 @@ import com.google.gson.reflect.TypeToken;
 public class UsuariosManager {
 	
 	private List<Usuario> usuarios;
-	
-	// agregar usuarios prueba
-   	
 	private static UsuariosManager instancia;
 	
 	private UsuariosManager (){
-		
 		recuperarUsuariosGuardados();
-		//this.usuarios = new ArrayList<Usuario>();
-		//agregar usuarios prueba
-		//this.usuarios.add(new Usuario("usuario01", "usuario1@ejemplo.com", "Pa$$word", "Ejemplo 1", "Recepcion"));
-		//this.usuarios.add(new Usuario("usuario02", "usuario2@ejemplo.com", "Pa$$word", "Ejemplo 2", "Laboratorio"));
-		//this.guardarUsuarios();
+		
+//		this.usuarios = new ArrayList<Usuario>();
+//		this.usuarios.add(new Usuario("usuario01", "usuario1@ejemplo.com", "Pa$$word", "Ejemplo 1", "Recepcion"));
+//		this.usuarios.add(new Usuario("usuario02", "usuario2@ejemplo.com", "Pa$$word", "Ejemplo 2", "Laboratorio"));
+//		this.guardarUsuarios();
 	}
 
 	public static UsuariosManager getInstancia(){
@@ -64,8 +60,12 @@ public class UsuariosManager {
 	public void cargarDatos(String userName, String email, String password, String nombre, String role) {
 		boolean existing = false;
 		for(Usuario u : usuarios) {
-			if (u.getUserName() == userName) {
-				u.editUsuario(userName, email, password, nombre, role);
+			if (u.getUserName().equals(userName)) {
+				u.setNombre(userName);
+				u.setEmail(email);
+				u.setPassword(password);
+				u.setNombre(nombre);
+				u.setRole(role);
 				existing = true;
 			}
 		}

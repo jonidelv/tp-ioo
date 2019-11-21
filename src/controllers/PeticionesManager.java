@@ -11,8 +11,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import dto.PeticionDTO;
-import dto.SucursalDTO;
+import model.CriterioNumerico;
 import model.Peticion;
+import model.Practica;
 import model.PracticaPedida;
 
 public class PeticionesManager {
@@ -23,8 +24,11 @@ public class PeticionesManager {
 	private PeticionesManager (){
 		//recuperarPeticionesGuardadas();
 		this.peticiones = new ArrayList<Peticion>();
-		addPeticion("99789123", "Galeno", "001", new ArrayList<PracticaPedida>());
-//		guardarPeticiones();
+		Practica practica = new Practica("A00002","Globulos rojos",4,(new CriterioNumerico(100,1000)),(new CriterioNumerico(0,100)));
+		List<PracticaPedida> practicas = new ArrayList<PracticaPedida>();
+		practicas.add(new PracticaPedida(practica,""));
+		addPeticion(0,99789123, "Galeno", "001", practicas);
+		guardarPeticiones();
 		
 	}
 
@@ -90,8 +94,8 @@ public class PeticionesManager {
 		
 	}
 	
-	public void addPeticion(String dni, String os, String idSucursal, List<PracticaPedida> practicasPedidas) {
-        peticiones.add(new Peticion(dni,os,idSucursal, practicasPedidas));
+	public void addPeticion(int id,int dni, String os, String idSucursal, List<PracticaPedida> practicasPedidas) {
+        peticiones.add(new Peticion(id,dni,os,idSucursal, practicasPedidas));
         this.guardarPeticiones();
     }
 
@@ -123,6 +127,41 @@ public class PeticionesManager {
 			}
 		}
 		return (new ArrayList<PracticaPedida>());
+	}
+
+	public void guardarPeticion(int id, int dniPaciente, String os, String sucursalId, List<PracticaPedida> practicasPedidas) {
+		boolean existing = false;
+		for (Peticion pp : peticiones){
+			if (pp.getId() == id){
+				pp.setObraSocial(os);
+				pp.setSucursal(SucursalesManager.getInstancia().getSucursal(sucursalId));
+				pp.setPaciente(PacientesManager.getInstancia().getPaciente(dniPaciente));
+				pp.setPracticasPedidas(practicasPedidas);
+				existing = true;
+			}
+			
+		}
+		
+		if(!existing){
+			peticiones.add(new Peticion(id,dniPaciente, os, sucursalId, practicasPedidas));
+		}
+		
+		guardarPeticiones();
+		
+	}
+
+	public void eliminarPeticion(int id) {
+		int ind = 0;
+		int vic = 0;
+		for (Peticion pet:peticiones){
+			if (pet.getId() == id ){
+				vic = ind;
+			}
+			ind ++;
+		}
+		peticiones.remove(vic);	
+		guardarPeticiones();
+		
 	}
 
 

@@ -142,7 +142,7 @@ public class VistaNuevoPaciente extends JFrame {
 
 	public void editarPaciente(String dni) {
 		// TODO Auto-generated method stub
-		paciente = PacientesManager.getInstancia().getPaciente(dni);
+		paciente = PacientesManager.getInstancia().getPaciente(Integer.parseInt(dni));
 		textField_dni.setText(String.valueOf(paciente.getDni()));
 		textField_nombre.setText(paciente.getNombre());
 		textField_direccion.setText(paciente.getDomicilio());

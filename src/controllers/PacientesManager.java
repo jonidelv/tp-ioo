@@ -16,31 +16,29 @@ import com.google.gson.reflect.TypeToken;
 public class PacientesManager {
 	
 	private List<Paciente> pacientes;
-	
-	// agregar pacientes prueba
    	
 	private static PacientesManager instancia;
 	
 	private PacientesManager (){
-		
-		this.pacientes = new ArrayList<Paciente>();
-		
-		this.pacientes.add(new Paciente(99123456,"Juan Perez","Ejemplo 123","masculino",28));
-		this.pacientes.add(new Paciente(99789123,"Jose Lopez","Ejemplo 456","masculino",82));
-		guardarPacientes();
+		recuperarPacientesGuardados();
+//		this.pacientes = new ArrayList<Paciente>();
+//		this.pacientes.add(new Paciente(99123456,"Juan Perez","Ejemplo 123","masculino",28));
+//		this.pacientes.add(new Paciente(99789123,"Jose Lopez","Ejemplo 456","masculino",82));
+//		guardarPacientes();
 				
 	}
 
-//	private void recuperarPacientesGuardados() {
-//		java.lang.reflect.Type listType = new TypeToken<ArrayList<Paciente>>(){}.getType();
-//		try (FileReader reader = new FileReader("pacientes.json")) {
-//			this.pacientes = new Gson().fromJson(reader , listType);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		
-//	}
-//	
+	private void recuperarPacientesGuardados() {
+		java.lang.reflect.Type listType = new TypeToken<ArrayList<Paciente>>(){}.getType();
+		try (FileReader reader = new FileReader("pacientes.json")) {
+			this.pacientes = new Gson().fromJson(reader , listType);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	private void guardarPacientes(){
 		try (Writer writer = new FileWriter("pacientes.json")) {
 		    Gson gson = new GsonBuilder().create();
@@ -82,8 +80,7 @@ public class PacientesManager {
 
 	}
 
-	public Paciente getPaciente(String dniString) {
-		int dni = Integer.parseInt(dniString);		
+	public Paciente getPaciente(int dni) {		
 		for(Paciente pac : pacientes) {
 			if (pac.getDni() == dni) {
 				return pac;

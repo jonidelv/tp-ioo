@@ -73,9 +73,6 @@ public class PracticasManager {
 			practicasDTO.add(new PracticaDTO(pra.getCodigo(),pra.getNombre(),pra.getCantidadHorasResultados(),pra.isEnabled()));			
 		}
 		
-		//practicasDTO.add(new PracticaDTO(99123456,"Juan Perez"));
-		//practicasDTO.add(new PracticaDTO(99789123,"Jose Lopez"));
-		
 		return practicasDTO;
 	}
 

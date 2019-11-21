@@ -26,6 +26,7 @@ public class MenuPeticiones extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField textField_search;
+	private DefaultTableModel model;
 
 	/**
 	 * Launch the application.
@@ -71,10 +72,10 @@ public class MenuPeticiones extends JFrame {
 		table = new JTable();
 		table.setBounds(68, 174, 529, 271);
 		
-		DefaultTableModel model = new DefaultTableModel(new Object[][] {
+		model = new DefaultTableModel(new Object[][] {
 				},
 				new String[] {
-					"Id","Paciente","Obra social","Fecha ingreso","Finalizado"
+					"Id","DNI paciente","Obra social","Fecha ingreso","Finalizado"
 				});
 		
 		
@@ -82,12 +83,13 @@ public class MenuPeticiones extends JFrame {
 		for (PeticionDTO pet:peticiones){
 				List<String> list = new ArrayList<String>();
 				list.add(String.valueOf(pet.id));
-				list.add(pet.paciente.getNombre());
+				list.add(String.valueOf(pet.paciente.getDni()));
 				list.add(pet.obraSocial);
 				list.add(pet.fechaCarga.toString());
 				list.add(String.valueOf(pet.finalizado));
 				model.addRow(list.toArray());
 		}
+		
 		table.setModel(model);	
 		contentPane.add(table);
 				
@@ -123,7 +125,7 @@ public class MenuPeticiones extends JFrame {
 				if(table.getSelectionModel().isSelectionEmpty()){
 				    JOptionPane.showMessageDialog(new JFrame(), "Seleccion un paciente de la lista para borrar", "Peticiones", JOptionPane.ERROR_MESSAGE);	
 				} else {
-					//TODO completar codigo borrar paciente
+					PeticionesManager.getInstancia().eliminarPeticion(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString()));
 					
 				}
 				
@@ -155,7 +157,7 @@ public class MenuPeticiones extends JFrame {
 		btn_resultados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Resultados resultados = new Resultados();
-				resultados.cargarResultados(table.getValueAt(table.getSelectedRow(), 0).toString());
+				resultados.main(null);
 				resultados.setVisible(true);
 				setVisible(false);				
 			}
@@ -167,25 +169,16 @@ public class MenuPeticiones extends JFrame {
 		
 	}
 
-	public void getPeticionesPaciente(String dni) {
+	public void getPeticionesPaciente(int dni) {
 		
-		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
-		new String[] {
-			"Id","Paciente","Obra social","Fecha ingreso","Finalizado"
-		});
-
-		List<PeticionDTO> peticiones = PeticionesManager.getInstancia().getPeticionesSimples();
-		for (PeticionDTO pet:peticiones){
-				if (pet.paciente.getDni() == Integer.parseInt(dni)) {
-					List<String> list = new ArrayList<String>();
-					list.add(String.valueOf(pet.id));
-					list.add(pet.paciente.getNombre());
-					list.add(pet.obraSocial);
-					list.add(pet.fechaCarga.toString());
-					model.addRow(list.toArray());
+		for (int i = table.getModel().getRowCount() - 1 ; i >= 0 ; i --)
+			if (Integer.parseInt(table.getValueAt(i, 1).toString()) != dni ) {
+				this.model.removeRow(i);
 			}
-		}
-		table.setModel(model);
-		model.fireTableChanged(null);
+		
+		this.table.setModel(this.model);
+		this.table.repaint();
+
+
 	}
 }

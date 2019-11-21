@@ -17,11 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controllers.PacientesManager;
 import controllers.UsuariosManager;
 import model.Usuario;
-
-
 
 public class MenuUsuarios extends JFrame {
 

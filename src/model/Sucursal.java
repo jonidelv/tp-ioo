@@ -1,9 +1,6 @@
 package model;
 import java.util.*;
 
-import controllers.LoginManager;
-
-
 public class Sucursal {
 	
 
@@ -58,24 +55,11 @@ public class Sucursal {
 		this.peticiones = peticiones;
 	}
 
-	   
-	public void addSucursal() {
-			// TODO implement here
-	}
-	
-	public void removeSucursal() {
-	       // TODO implement here
-	}
-	
-	public void editSucursal() {
-	    // TODO implement here
+	public void addPeticion(Peticion peticion) {
+		this.peticiones.add(peticion);
+		
 	}
 
-	public void tienePeticiones() {
-	    // TODO implement here
-	}
-
-	
 	
 	
 }

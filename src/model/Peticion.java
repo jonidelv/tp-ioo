@@ -2,6 +2,7 @@ package model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import controllers.PacientesManager;
 import controllers.SucursalesManager;
@@ -9,30 +10,34 @@ import controllers.SucursalesManager;
 public class Peticion {
 
 	private int id; 
-	private Paciente paciente;
+	private transient Paciente paciente;
 	private String obraSocial;
 	private LocalDateTime fechaCarga;
 	private LocalDateTime fechaEntrega;
 	private List<PracticaPedida> practicasPedidas;
-	private Sucursal sucursal;
+	private transient Sucursal sucursal;
 	private boolean finalizado;
 	
 
 
-	public Peticion(String pacienteId, String os, String sucursalId, List<PracticaPedida> practicasPedidas) {
-    	this.id = (int) Math.random(); //PeticionesManager.getInstancia().generateId();
+	public Peticion(int id, int pacienteId, String os, String sucursalId, List<PracticaPedida> practicasPedidas) {
+    	this.id = id; //PeticionesManager.getInstancia().generateId();
     	this.paciente = PacientesManager.getInstancia().getPaciente(pacienteId);
+    	
     	this.obraSocial = os;
     	this.fechaCarga = LocalDateTime.now();
+    	
     	if (!practicasPedidas.isEmpty()){
     		this.practicasPedidas = practicasPedidas;
     	} else {
     		this.practicasPedidas = new ArrayList<PracticaPedida>();
     	}
     	
-    	this.sucursal = SucursalesManager.getInstancia().getSucursal(sucursalId);
+    	this.sucursal = SucursalesManager.getInstancia().getSucursal(sucursalId);  	
     	this.finalizado = false;
     	
+    	this.paciente.addPeticion(this);
+    	this.sucursal.addPeticion(this);
     }
 	
 	public Paciente getPaciente() {
@@ -91,10 +96,6 @@ public class Peticion {
 	public LocalDateTime getFechaCarga() {
 		return fechaCarga;
 	}
-
-    public void editPeticion() {
-        // TODO implement here
-    }
 
     public void cargarResultados() {
         // TODO implement here

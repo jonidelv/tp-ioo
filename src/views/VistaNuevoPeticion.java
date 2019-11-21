@@ -16,7 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import controllers.PeticionesManager;
 import controllers.PracticasManager;
@@ -34,6 +36,7 @@ public class VistaNuevoPeticion extends JFrame {
 	private JTextField textField_dniPaciente;
 	private JComboBox comboBox_sucursal;
 	private JList list_practicasPedidas;
+	private JTextField textField_Id;
 	
 
 	/**
@@ -70,25 +73,25 @@ public class VistaNuevoPeticion extends JFrame {
 		contentPane.add(lblNuevoPeticion);
 		
 		textField_obraSocial = new JTextField();
-		textField_obraSocial.setBounds(136, 125, 116, 22);
+		textField_obraSocial.setBounds(136, 149, 116, 22);
 		contentPane.add(textField_obraSocial);
 		textField_obraSocial.setColumns(10);
 		
 		JLabel lbId = new JLabel("DNI paciente");
-		lbId.setBounds(52, 92, 85, 16);
+		lbId.setBounds(52, 116, 85, 16);
 		contentPane.add(lbId);
 
 		JLabel lblDireccion = new JLabel("Obra social");
-		lblDireccion.setBounds(52, 128, 85, 16);
+		lblDireccion.setBounds(52, 152, 85, 16);
 		contentPane.add(lblDireccion);
 		
 		textField_dniPaciente = new JTextField();
-		textField_dniPaciente.setBounds(136, 89, 116, 22);
+		textField_dniPaciente.setBounds(136, 113, 116, 22);
 		contentPane.add(textField_dniPaciente);
 		textField_dniPaciente.setColumns(10);
 		
 		JLabel lblSucursal = new JLabel("Sucursal");
-		lblSucursal.setBounds(52, 167, 56, 16);
+		lblSucursal.setBounds(52, 191, 56, 16);
 		contentPane.add(lblSucursal);
 		
 		List<SucursalDTO> sucursales = SucursalesManager.getInstancia().getSucursalesSimples();
@@ -98,7 +101,7 @@ public class VistaNuevoPeticion extends JFrame {
 		
 		this.comboBox_sucursal = new JComboBox();
 		comboBox_sucursal.setModel(new DefaultComboBoxModel(direccionSucursales.toArray()));
-		comboBox_sucursal.setBounds(136, 164, 119, 22);
+		comboBox_sucursal.setBounds(136, 188, 119, 22);
 		contentPane.add(comboBox_sucursal);
 		
 		JButton btn_cancelar = new JButton("Cancelar");
@@ -124,8 +127,13 @@ public class VistaNuevoPeticion extends JFrame {
 						idSucursal = Integer.toString(suc.num);
 					}
 				}
-				List<PracticaPedida> practicasPedidas = new ArrayList<PracticaPedida>();
-				PeticionesManager.getInstancia().addPeticion(textField_dniPaciente.getText(),textField_obraSocial.getText(),idSucursal,practicasPedidas);
+				List<PracticaPedida> pedidas = new ArrayList<PracticaPedida>();
+						
+				for (Object pp : ((DefaultListModel) list_practicasPedidas.getModel()).toArray() ){
+					pedidas.add((PracticaPedida) pp);
+				}
+				
+				PeticionesManager.getInstancia().guardarPeticion(Integer.parseInt(textField_Id.getText()),Integer.parseInt(textField_dniPaciente.getText()),textField_obraSocial.getText(),idSucursal,pedidas);
 				MenuPeticiones back = new MenuPeticiones();
 				back.setVisible(true);
 				setVisible(false);
@@ -136,7 +144,8 @@ public class VistaNuevoPeticion extends JFrame {
 		btnGuardar.setBounds(432, 488, 97, 25);
 		contentPane.add(btnGuardar);
 				
-		this.list_practicasPedidas = new JList(new DefaultListModel());
+		this.list_practicasPedidas = new JList();
+		this.list_practicasPedidas.setModel(new DefaultListModel<PracticaPedida>());
 		list_practicasPedidas.setBounds(93, 268, 253, 213);
 		contentPane.add(list_practicasPedidas);
 		
@@ -160,19 +169,34 @@ public class VistaNuevoPeticion extends JFrame {
 		comboBox_practicas.setBounds(358, 298, 131, 25);
 		contentPane.add(comboBox_practicas);
 		
+		JLabel lblId = new JLabel("ID");
+		lblId.setBounds(93, 81, 24, 16);
+		contentPane.add(lblId);
+		
+		textField_Id = new JTextField();
+		textField_Id.setEditable(false);
+		textField_Id.setBounds(136, 78, 116, 22);
+		contentPane.add(textField_Id);
+		textField_Id.setColumns(10);
+	
+		textField_Id.setText(String.valueOf(PeticionesManager.getInstancia().generateId()));
+		
 		
 	}
 
 	public void editarPeticion(String cod) {
 		Peticion peticion = PeticionesManager.getInstancia().getPeticion(Integer.parseInt(cod));
+		textField_Id.setText(cod);
 		textField_obraSocial.setText(peticion.getObraSocial());
 		textField_dniPaciente.setText(String.valueOf(peticion.getPaciente().getDni()));
 		comboBox_sucursal.setSelectedItem(peticion.getSucursal().getDireccion());
+		
 		List<PracticaPedida> practicasPedidas = PeticionesManager.getInstancia().getPracticasPedidas(Integer.parseInt(cod));
-		if (practicasPedidas.isEmpty()) {
-			this.list_practicasPedidas = new JList();
-		} else {
-			this.list_practicasPedidas = new JList((DefaultListModel)practicasPedidas);
+		if (!practicasPedidas.isEmpty()) {
+			DefaultListModel model = new DefaultListModel<PracticaPedida>();
+			for (PracticaPedida pra:practicasPedidas)
+				model.addElement(pra);
+			this.list_practicasPedidas.setModel(model);
 		}
 		
 		

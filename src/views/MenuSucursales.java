@@ -72,7 +72,7 @@ public class MenuSucursales extends JFrame {
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {
 				},
 				new String[] {
-					"Numero", "Direccion"//,"Responsable Tecnico"
+					"Numero", "Direccion","Responsable Tecnico"
 				});
 		
 		List<SucursalDTO> sucursales = SucursalesManager.getInstancia().getSucursalesSimples();
@@ -80,7 +80,7 @@ public class MenuSucursales extends JFrame {
 				List<String> list = new ArrayList<String>();
 				list.add(String.valueOf(s.num));
 				list.add(s.direccion);
-				//list.add(s.responsableTecnico.userName.toString());
+				list.add(s.responsableTecnico.getNombre().toString());
 				model.addRow(list.toArray());	
 		}
 		
@@ -123,7 +123,10 @@ public class MenuSucursales extends JFrame {
 				if(table.getSelectionModel().isSelectionEmpty()){
 				    JOptionPane.showMessageDialog(new JFrame(), "Seleccion una sucursal de la lista para borrar", "Sucursales", JOptionPane.ERROR_MESSAGE);	
 				} else {
-					SucursalesManager.getInstancia().eliminarSucursal(table.getValueAt(table.getSelectedRow(), 0).toString());
+					SucursalesManager.getInstancia().eliminarSucursal(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()));
+					setVisible(false);
+					main(null);
+					
 				}
 				
 				
