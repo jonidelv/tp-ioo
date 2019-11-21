@@ -165,10 +165,9 @@ public class MenuPacientes extends JFrame {
 							"Pacientes",JOptionPane.ERROR_MESSAGE);				
 				} else {
 					MenuPeticiones nuevaVista = new MenuPeticiones();
-					
-					nuevaVista.main(null);
 					nuevaVista.getPeticionesPaciente(Integer.parseInt(
 							table.getValueAt(table.getSelectedRow(), 0).toString()) );
+					nuevaVista.setVisible(true);
 					setVisible(false);
 				}
 			}

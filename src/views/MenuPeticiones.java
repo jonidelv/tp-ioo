@@ -157,7 +157,7 @@ public class MenuPeticiones extends JFrame {
 		btn_resultados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Resultados resultados = new Resultados();
-				resultados.main(null);
+				resultados.cargarResultados(table.getValueAt(table.getSelectedRow(), 0).toString());
 				resultados.setVisible(true);
 				setVisible(false);				
 			}
