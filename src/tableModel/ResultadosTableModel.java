@@ -1,5 +1,6 @@
 package tableModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -8,19 +9,17 @@ import model.PracticaPedida;
  
 public class ResultadosTableModel extends AbstractTableModel
 {
-    private final List<PracticaPedida> practicasPedidas;
+    private ArrayList<PracticaPedida> practicasPedidas;
      
-    private final String[] columnNames = new String[] {
+    private String[] columnNames = new String[] {
             "Pratica", "Resultado"
     };
-    private final Class[] columnClass = new Class[] {
-        String.class, String.class
-    };
  
-    public ResultadosTableModel(List<PracticaPedida> practicasPedidas)
+    public ResultadosTableModel(ArrayList<PracticaPedida> practicasPedidas)
     {
         this.practicasPedidas = practicasPedidas;
     }
+
      
     @Override
     public String getColumnName(int column)
@@ -28,11 +27,6 @@ public class ResultadosTableModel extends AbstractTableModel
         return columnNames[column];
     }
  
-    @Override
-    public Class<?> getColumnClass(int columnIndex)
-    {
-        return columnClass[columnIndex];
-    }
  
     @Override
     public int getColumnCount()

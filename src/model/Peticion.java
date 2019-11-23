@@ -73,8 +73,8 @@ public class Peticion {
 		this.fechaEntrega = fechaEntrega;
 	}
 
-	public List<PracticaPedida> getPracticasPedidas() {
-		return practicasPedidas;
+	public ArrayList<PracticaPedida> getPracticasPedidas() {
+		return (ArrayList<PracticaPedida>) practicasPedidas;
 	}
 
 	public void setPracticasPedidas(List<PracticaPedida> practicas) {

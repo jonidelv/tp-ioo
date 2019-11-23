@@ -18,6 +18,7 @@ public class Resultados extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private ResultadosTableModel model;
 
 	/**
 	 * Launch the application.
@@ -49,6 +50,7 @@ public class Resultados extends JFrame {
 		
 		table = new JTable();
 		table.setBounds(24, 28, 373, 183);
+		table.setModel(new ResultadosTableModel(null));
 		contentPane.add(table);
 		
 		JButton btn_aceptar = new JButton("Aceptar");
@@ -57,8 +59,9 @@ public class Resultados extends JFrame {
 	}
 
 	public void cargarResultados(String idPeticion) {
-		Peticion peticion = PeticionesManager.getInstancia().getPeticion(Integer.parseInt(idPeticion));
-		table.setModel(new ResultadosTableModel(peticion.getPracticasPedidas()));
+		ArrayList<PracticaPedida> practicasPedidas = PeticionesManager.getInstancia().getPeticion(Integer.parseInt(idPeticion)).getPracticasPedidas();
+		model = new ResultadosTableModel(practicasPedidas);
+		table.setModel(model);
 		
 	}
 }

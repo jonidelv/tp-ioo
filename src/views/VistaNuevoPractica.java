@@ -122,11 +122,6 @@ public class VistaNuevoPractica extends JFrame {
 				
 				ICriterio critico;
 				ICriterio reservado;
-				
-//				private JTextField textField_criticoNumMin;
-//				private JTextField textField_criticoNumMax;
-//				private JTextField textField_reservadoNumMin;
-//				private JTextField textField_reservadoNumMax;
 			
 				if (comboBox_criterio.getSelectedItem() == "Descriptivo") {
 					critico = new CriterioDescriptivo(Arrays.asList(textField_criticoDesc.getText().toString().split(",")));
@@ -254,11 +249,6 @@ public class VistaNuevoPractica extends JFrame {
 			this.textField_reservadoNumMax.setText(Integer.toString(practica.getCriterioReservado().getMax()));
 			this.textField_reservadoNumMin.setText(Integer.toString(practica.getCriterioReservado().getMin()));
 		}
-		
-		
-		
-		//),textField_nombre.getText(),textField_direccion.getText(),textField_sexo.getText(),Integer.parseInt(textField_edad.getText()));
-		
 	}
 	
 	private void showDescriptivo() {

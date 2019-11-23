@@ -43,7 +43,7 @@ public class PracticasManager {
 	public void cargarDatos(String codigo, String nombre, int hs, ICriterio critico, ICriterio reservado) {
 		boolean existing = false;
 		for(Practica pra : practicas) {
-			if (pra.getCodigo() == codigo) {
+			if (pra.getCodigo().equals(codigo)) {
 				pra.editPractica(codigo, nombre, hs, critico, reservado);
 				existing = true;
 			}
@@ -77,7 +77,6 @@ public class PracticasManager {
 	}
 
 	public List<Practica> getPracticas() {
-		// TODO Auto-generated method stub
 		return this.practicas;
 	}
 		
