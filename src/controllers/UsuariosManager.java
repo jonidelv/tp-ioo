@@ -17,13 +17,15 @@ public class UsuariosManager {
 	
 	private List<Usuario> usuarios;
 	private static UsuariosManager instancia;
+	private Usuario usuarioActivo;
 	
 	private UsuariosManager (){
 		recuperarUsuariosGuardados();
 		
 //		this.usuarios = new ArrayList<Usuario>();
-//		this.usuarios.add(new Usuario("usuario01", "usuario1@ejemplo.com", "Pa$$word", "Ejemplo 1", "Recepcion"));
-//		this.usuarios.add(new Usuario("usuario02", "usuario2@ejemplo.com", "Pa$$word", "Ejemplo 2", "Laboratorio"));
+//		this.usuarios.add(new Usuario("admin", "admin@ejemplo.com", "admin", "Administrador", "Admin"));
+//		this.usuarios.add(new Usuario("usuario01", "usuario1@ejemplo.com", "Pa$$word", "Ejemplo 1", "Recepcionista"));
+//		this.usuarios.add(new Usuario("usuario02", "usuario2@ejemplo.com", "Pa$$word", "Ejemplo 2", "Laboratorista"));
 //		this.guardarUsuarios();
 	}
 
@@ -36,6 +38,10 @@ public class UsuariosManager {
     
 	public List<Usuario> getUsuarios (){
 		return this.usuarios;
+	}
+	
+	public String getRoleUsuarioActivo() {
+		return this.usuarioActivo.getRole();
 	}
 	
 	private void recuperarUsuariosGuardados() {
@@ -98,6 +104,17 @@ public class UsuariosManager {
 		}
 		if (target != -1){ this.usuarios.remove(target); }
 		guardarUsuarios();
+		
+	}
+
+	public boolean login(String userName, String password) {
+		for (Usuario usuario : usuarios){
+			if (usuario.getUserName().equals(userName) && usuario.getPassword().equals(password)){
+				this.usuarioActivo = usuario;
+				return true;
+			}
+		}
+		return false;
 		
 	}
 		

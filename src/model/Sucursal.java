@@ -60,6 +60,11 @@ public class Sucursal {
 		
 	}
 
+	public boolean tienePeticiones() {
+		if (!this.peticiones.isEmpty()) { return true; }
+		return false;
+	}
+
 	
 	
 }

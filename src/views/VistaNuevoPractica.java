@@ -159,12 +159,12 @@ public class VistaNuevoPractica extends JFrame {
 		comboBox_criterio.setBounds(136, 211, 116, 22);
 		contentPane.add(comboBox_criterio);
 		
-		JLabel lblValoresCriticos = new JLabel("Valores criticos");
-		lblValoresCriticos.setBounds(22, 264, 112, 16);
+		JLabel lblValoresCriticos = new JLabel("Valores aceptados como no criticos:");
+		lblValoresCriticos.setBounds(22, 264, 248, 16);
 		contentPane.add(lblValoresCriticos);
 		
-		JLabel lblValoresReservados = new JLabel("Valores reservados");
-		lblValoresReservados.setBounds(22, 340, 122, 16);
+		JLabel lblValoresReservados = new JLabel("Valores aceptados como no reservados:");
+		lblValoresReservados.setBounds(22, 340, 260, 16);
 		contentPane.add(lblValoresReservados);
 		
 

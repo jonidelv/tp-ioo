@@ -1,19 +1,18 @@
 package views;
 
 import java.awt.EventQueue;
-import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import controllers.LoginManager;
+import controllers.UsuariosManager;
 
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-public class Inicio {
+public class Inicio extends JFrame {
 
 	private JFrame frmLogin;
 	private JTextField textField_UserName;
@@ -82,20 +81,14 @@ public class Inicio {
 				
 				
 				String userName = textField_UserName.getText();
-				String password = "textField_Password.getText()";
+				String password = textField_Password.getText();
 
-				LoginManager.getInstancia().login(userName,password);
-						
-				label_LoginResult.setText("Login exitoso para el usuario" + userName);
-				
-				// this.dispose(); TODO cerrar esta ventana
-				
-				try {
-					MenuPrincipal.main(null);					
-				} catch (Exception f) {
-					f.printStackTrace();
+				if (UsuariosManager.getInstancia().login(userName,password)){
+				 	setVisible(false);
+				 	MenuPrincipal.main(null);
+				} else {
+					JOptionPane.showMessageDialog(new JFrame(), "Los datos ingresados son incorrectos", "Login",JOptionPane.ERROR_MESSAGE);
 				}
-				
 				
 			}
 

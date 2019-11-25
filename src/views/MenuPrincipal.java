@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controllers.UsuariosManager;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -46,7 +49,18 @@ public class MenuPrincipal extends JFrame {
 		
 		JComboBox comboBox_opciones = new JComboBox();
 		comboBox_opciones.setToolTipText("");
-		comboBox_opciones.setModel(new DefaultComboBoxModel(new String[] {"Usuarios", "Sucursales", "Pacientes", "Practicas","Peticiones"}));
+		switch (UsuariosManager.getInstancia().getRoleUsuarioActivo()) {
+			case "Admin":
+				comboBox_opciones.setModel(new DefaultComboBoxModel(new String[] {"Usuarios", "Sucursales", "Pacientes", "Practicas","Peticiones"}));
+				break;
+			case "Recepcionista":
+				comboBox_opciones.setModel(new DefaultComboBoxModel(new String[] {"Pacientes","Peticiones"}));
+				break;
+			case "Laboratorista":
+				comboBox_opciones.setModel(new DefaultComboBoxModel(new String[] {"Peticiones"}));
+				break;
+		}
+		
 		comboBox_opciones.setBounds(29, 37, 342, 22);
 		contentPane.add(comboBox_opciones);
 		
@@ -76,9 +90,6 @@ public class MenuPrincipal extends JFrame {
 					  setVisible(false);
 					    break;
 
-				    
-				  default:
-				    // code block
 				}
 				
 				

@@ -1,1 +1,1 @@
-[{"num":1,"direccion":"Av 9 de Julio","peticiones":[]},{"num":2,"direccion":"Lima 555","peticiones":[]}]
+[{"num":1,"direccion":"Av 9 de Julio","responsableTecnico":{"userName":"usuario01","email":"usuario1@ejemplo.com","password":"Pa$$word","nombre":"Ejemplo 1","role":"Recepcion"},"peticiones":[]},{"num":2,"direccion":"Lima 555","responsableTecnico":{"userName":"usuario02","email":"usuario2@ejemplo.com","password":"Pa$$word","nombre":"Ejemplo 2","role":"Laboratorio"},"peticiones":[]}]

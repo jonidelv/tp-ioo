@@ -120,6 +120,16 @@ public class Peticion {
 	public boolean esReservada() {
 		return practicasPedidas.stream().anyMatch(PracticaPedida::esReservada);
 	}
+
+	public boolean tieneResultadosCriticos() {
+		for (PracticaPedida pp : this.practicasPedidas)		{
+			if (pp.esCritica()){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	
 	
 }

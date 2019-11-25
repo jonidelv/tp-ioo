@@ -9,13 +9,16 @@ import model.PracticaPedida;
  
 public class ResultadosTableModel extends AbstractTableModel
 {
-    private ArrayList<PracticaPedida> practicasPedidas;
+    private final List<PracticaPedida> practicasPedidas;
      
-    private String[] columnNames = new String[] {
+    private final String[] columnNames = new String[] {
             "Pratica", "Resultado"
     };
+    private final Class[] columnClass = new Class[] {
+            String.class, String.class
+        };
  
-    public ResultadosTableModel(ArrayList<PracticaPedida> practicasPedidas)
+    public ResultadosTableModel(List<PracticaPedida> practicasPedidas)
     {
         this.practicasPedidas = practicasPedidas;
     }
@@ -25,6 +28,12 @@ public class ResultadosTableModel extends AbstractTableModel
     public String getColumnName(int column)
     {
         return columnNames[column];
+    }
+    
+    @Override
+    public Class<?> getColumnClass(int columnIndex)
+    {
+        return columnClass[columnIndex];
     }
  
  

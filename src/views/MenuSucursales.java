@@ -123,15 +123,16 @@ public class MenuSucursales extends JFrame {
 				if(table.getSelectionModel().isSelectionEmpty()){
 				    JOptionPane.showMessageDialog(new JFrame(), "Seleccion una sucursal de la lista para borrar", "Sucursales", JOptionPane.ERROR_MESSAGE);	
 				} else {
-					SucursalesManager.getInstancia().eliminarSucursal(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()));
-					setVisible(false);
-					main(null);
-					
+					if (SucursalesManager.getInstancia().eliminarSucursal(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()))){
+						setVisible(false);
+						main(null);
+					} else {
+						JOptionPane.showMessageDialog(new JFrame(), "No se puede eliminar la sucursal\n porque tiene peticiones", "Sucursales", JOptionPane.ERROR_MESSAGE);						
+					}
 				}
-				
-				
 			}
 		});
+
 		btnEliminar.setBounds(519, 77, 97, 25);
 		contentPane.add(btnEliminar);
 		

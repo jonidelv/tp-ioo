@@ -24,7 +24,13 @@ public class CriterioDescriptivo implements ICriterio {
     }
     
     public String toString(){
-    	return this.valoresAceptados.toString();
+    	StringBuilder builder = new StringBuilder();
+    	for (String s : this.valoresAceptados){
+    		builder.append(s);
+    		builder.append(",");
+    	}
+    	
+    	return builder.toString();
     }
 
 	@Override

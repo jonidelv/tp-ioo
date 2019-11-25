@@ -125,7 +125,7 @@ public class MenuPracticas extends JFrame {
 				if(table.getSelectionModel().isSelectionEmpty()){
 				    JOptionPane.showMessageDialog(new JFrame(), "Seleccion un practica de la lista para borrar", "Practicas", JOptionPane.ERROR_MESSAGE);	
 				} else {
-					//TODO completar codigo borrar practica
+					PracticasManager.getInstancia().eliminarPractica(table.getValueAt(table.getSelectedRow(), 0).toString());
 					
 				}
 				
@@ -152,8 +152,5 @@ public class MenuPracticas extends JFrame {
 		});
 		btnEditar.setBounds(410, 77, 97, 25);
 		contentPane.add(btnEditar);
-		
-		
-		
 	}
 }

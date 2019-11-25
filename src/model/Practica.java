@@ -55,14 +55,6 @@ public class Practica {
 		this.grupo = grupo;
 	}
 
-//	public Criterio getCriterio() {
-//		return criterio;
-//	}
-//
-//	public void setCriterio(Criterio criterio) {
-//		this.criterio = criterio;
-//	}
-
 	public int getCantidadHorasResultados() {
 		return cantidadHorasResultados;
 	}
@@ -78,15 +70,6 @@ public class Practica {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-
-
-    public void addPractica() {
-        // TODO implement here
-    }
-
-    public void disablePractica() {
-        // TODO implement here
-    }
 
 	public ICriterio getCriterioCritico() {
 		return criterioCritico;

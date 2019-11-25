@@ -28,8 +28,9 @@ public class CriterioNumerico implements ICriterio {
 
 	@Override
     public boolean verificar(String resultado) {
-        int numRes = Integer.parseInt(resultado);
-
-        return min >= numRes && numRes <= max;
+        if (!resultado.equals("")) {
+			int numRes = Integer.parseInt(resultado);
+        	return min >= numRes && numRes <= max;
+        } else { return false; }
     }
 }

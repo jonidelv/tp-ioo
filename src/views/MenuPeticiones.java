@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controllers.PeticionesManager;
 import dto.PeticionDTO;
+import model.Peticion;
 
 
 public class MenuPeticiones extends JFrame {
@@ -94,7 +95,7 @@ public class MenuPeticiones extends JFrame {
 		contentPane.add(table);
 				
 	    JScrollPane scrollPane = new JScrollPane(table);
-	    scrollPane.setBounds(40, 126, 557, 319);
+	    scrollPane.setBounds(50, 156, 557, 319);
 	    getContentPane().add(scrollPane);
 		
 		textField_search = new JTextField();
@@ -165,6 +166,17 @@ public class MenuPeticiones extends JFrame {
 		btn_resultados.setBounds(519, 39, 97, 25);
 		contentPane.add(btn_resultados);
 		
+		JButton btn_filtrarCriticas = new JButton("Filtrar por resultados criticos");
+		btn_filtrarCriticas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getPeticionesConResultadosCriticos();
+			}
+
+
+		});
+		btn_filtrarCriticas.setBounds(410, 115, 206, 25);
+		contentPane.add(btn_filtrarCriticas);
+		
 		
 		
 	}
@@ -178,7 +190,19 @@ public class MenuPeticiones extends JFrame {
 		
 		this.table.setModel(this.model);
 		this.table.repaint();
-
-
 	}
+	
+	private void getPeticionesConResultadosCriticos() {
+		Peticion pet = null;
+		int i = 0;
+		for (i = table.getModel().getRowCount() - 1; i >= 0 ; i --) {
+			pet = PeticionesManager.getInstancia().getPeticion(Integer.parseInt(table.getValueAt(i, 0).toString()));
+			if (!pet.tieneResultadosCriticos()){
+				this.model.removeRow(i);
+			}
+		}
+		this.table.setModel(this.model);
+		this.table.repaint();
+	}
+	
 }

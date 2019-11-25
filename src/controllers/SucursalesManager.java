@@ -98,17 +98,25 @@ public class SucursalesManager {
 		return sucursalesDTO;
 	}
 
-	public void eliminarSucursal(int id) {
+	public boolean eliminarSucursal(int id) {
 		int ind = 0;
 		int vic = -1;
+		Sucursal vicSuc = null;
 		for (Sucursal suc : this.sucursales){
 			if (suc.getNum() == id) {
 				vic = ind;
+				vicSuc = suc;
 			}
 			ind++;
+		}
+		
+		if(vic != -1 && vicSuc.tienePeticiones() ) { 
+			this.sucursales.remove(vic);
+			guardarSucursales();
+			return true;
+			
 		}		
-		if(vic != -1) { this.sucursales.remove(vic); }
-		guardarSucursales();
+		return false;
 	}
 		
 		
