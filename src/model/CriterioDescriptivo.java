@@ -20,7 +20,10 @@ public class CriterioDescriptivo implements ICriterio {
 
     @Override
     public boolean verificar(String resultado) {
-        return valoresAceptados.stream().anyMatch(valor -> valor.equals(resultado));
+    	for (String normal : this.valoresAceptados) {
+    		if (normal.equals(resultado)){ return false; }
+    	}
+    	return true;
     }
     
     public String toString(){

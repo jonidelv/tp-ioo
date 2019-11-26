@@ -24,9 +24,12 @@ public class PeticionesManager {
 	private PeticionesManager (){
 		//recuperarPeticionesGuardadas();
 		this.peticiones = new ArrayList<Peticion>();
-		Practica practica = new Practica("A00002","Globulos rojos",4,(new CriterioNumerico(100,1000)),(new CriterioNumerico(0,100)));
+		//Practica practica = new Practica("A00002","Globulos rojos",4,(new CriterioNumerico(100,1000)),(new CriterioNumerico(0,100)));
+		Practica practica = PracticasManager.getInstancia().getPractica("A00002");
+		Practica practica2 = PracticasManager.getInstancia().getPractica("D00002");
 		List<PracticaPedida> practicas = new ArrayList<PracticaPedida>();
 		practicas.add(new PracticaPedida(practica,""));
+		practicas.add(new PracticaPedida(practica2,"10000"));
 		addPeticion(0,99789123, "Galeno", "001", practicas);
 		guardarPeticiones();
 		
@@ -97,26 +100,6 @@ public class PeticionesManager {
 	public void addPeticion(int id,int dni, String os, String idSucursal, List<PracticaPedida> practicasPedidas) {
         peticiones.add(new Peticion(id,dni,os,idSucursal, practicasPedidas));
         this.guardarPeticiones();
-    }
-
-    public void removePeticion() {
-        // TODO implement here
-    }
-
-    public void editPeticion() {
-        // TODO implement here
-    }
-
-    public void cargarResultados() {
-        // TODO implement here
-    }
-
-    public void listarCriticos() {
-        // TODO implement here
-    }
-
-    public void listarResultados() {
-        // TODO implement here
     }
 
 	public List<PracticaPedida> getPracticasPedidas(Integer cod) {

@@ -117,4 +117,14 @@ public class PracticasManager {
 		guardarPracticas();
 	}
 
+	public Practica getPracticaPorNombre(String nombre) {	
+		for(Practica pra : practicas) {
+			if (pra.getNombre().equals(nombre)) {
+				return pra;
+		}
+	}
+		return null;
+		
+	}
+
 }

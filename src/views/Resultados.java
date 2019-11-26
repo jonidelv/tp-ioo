@@ -9,10 +9,14 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import controllers.PeticionesManager;
+import controllers.PracticasManager;
+import controllers.UsuariosManager;
 import model.CriterioNumerico;
 import model.Practica;
 import model.PracticaPedida;
@@ -21,9 +25,10 @@ import tableModel.ResultadosTableModel;
 public class Resultados extends JFrame {
 
 	private JPanel contentPane;
+	private DefaultTableModel model;
 	private JTable table;
-	private ResultadosTableModel model;
-
+	private String idPeticion;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -51,16 +56,39 @@ public class Resultados extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
+//		List<PracticaPedida> listaPrueba = new ArrayList<PracticaPedida>();
+//		listaPrueba.add(new PracticaPedida((new Practica("A00001","Glucosa en sangre",4,(new CriterioNumerico(100,1000)),(new CriterioNumerico(0,100)))),""));
+				
 		table = new JTable();
-		table.setBounds(24, 28, 373, 183);
-		List<PracticaPedida> listaPrueba = new ArrayList<PracticaPedida>();
-		listaPrueba.add(new PracticaPedida((new Practica("A00001","Glucosa en sangre",4,(new CriterioNumerico(100,1000)),(new CriterioNumerico(0,100)))),""));
-		table.setModel(new ResultadosTableModel(listaPrueba));
-		contentPane.add(table);
+		table.setEditingColumn(1);
+		table.setBounds(31, 31, 369, 176);
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(32,32,370,176);
+		contentPane.add(scrollPane);
+		
+		
 		
 		JButton btn_aceptar = new JButton("Aceptar");
+		btn_aceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				List<PracticaPedida> practicasPedidas = new ArrayList<PracticaPedida>();
+				for (int i = table.getModel().getRowCount() - 1 ; i >= 0 ; i --) {
+					String practica = table.getValueAt(i, 0).toString();
+					String resultado = table.getValueAt(i, 1).toString();
+					practicasPedidas.add(new PracticaPedida(PracticasManager.getInstancia().getPracticaPorNombre(practica),resultado));
+				}
+				
+				PeticionesManager.getInstancia().getPeticion(Integer.parseInt(idPeticion)).setPracticasPedidas(practicasPedidas);
+				MenuPeticiones back = new MenuPeticiones();
+				back.setVisible(true);
+				setVisible(false);
+			}
+		});
 		btn_aceptar.setBounds(323, 224, 97, 25);
+		if (UsuariosManager.getInstancia().getRoleUsuarioActivo().equals("Recepcionista")){
+			btn_aceptar.setEnabled(false);
+		}
 		contentPane.add(btn_aceptar);
 		
 		JButton btn_cancelar = new JButton("Cancelar");
@@ -73,11 +101,28 @@ public class Resultados extends JFrame {
 		});
 		btn_cancelar.setBounds(209, 224, 97, 25);
 		contentPane.add(btn_cancelar);
+		
+
 	}
 
 	public void cargarResultados(String idPeticion) {
+		this.idPeticion = idPeticion;
 		ArrayList<PracticaPedida> practicasPedidas = PeticionesManager.getInstancia().getPeticion(Integer.parseInt(idPeticion)).getPracticasPedidas();
-		model = new ResultadosTableModel(practicasPedidas);
+		model = new DefaultTableModel(new Object[][] {
+		},
+		new String[] {
+			"Practica","Resultado"
+		});
+		
+		for(PracticaPedida pp : practicasPedidas){
+			List<String> list = new ArrayList<String>();
+			list.add(pp.getPractica().toString());
+			if (pp.esReservada()){
+				list.add("Retirar por sucursal");;
+			} else { list.add(pp.getResultado()); }
+			model.addRow(list.toArray());
+		}
+		
 		table.setModel(model);
 		
 	}

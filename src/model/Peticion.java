@@ -97,22 +97,6 @@ public class Peticion {
 		return fechaCarga;
 	}
 
-    public void cargarResultados() {
-        // TODO implement here
-    }
-
-    public void esCritico() {
-        // TODO implement here
-    }
-
-    public void esReservado() {
-        // TODO implement here
-    }
-
-    public void listarResultados() {
-        // TODO implement here
-    }
-
 	public boolean esCritica() {
 		return practicasPedidas.stream().anyMatch(PracticaPedida::esCritica);
 	}

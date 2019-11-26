@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -129,7 +130,11 @@ public class VistaNuevoPeticion extends JFrame {
 				}
 				List<PracticaPedida> pedidas = new ArrayList<PracticaPedida>();
 						
-				for (Object pp : ((DefaultListModel) list_practicasPedidas.getModel()).toArray() ){
+				for (Object ppo : ((DefaultListModel) list_practicasPedidas.getModel()).toArray() ){
+					PracticaPedida pp = (PracticaPedida) ppo;
+					String str = Objects.toString(pp.getResultado());
+					pp.setResultado(str);
+					if (str.equals("null")) { pp.setResultado("");}
 					pedidas.add((PracticaPedida) pp);
 				}
 				
